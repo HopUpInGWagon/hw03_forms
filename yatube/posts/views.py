@@ -19,7 +19,6 @@ def index(request):
     return render(request, template, context)
 
 
-@login_required
 def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
@@ -84,5 +83,5 @@ def post_edit(request, post_id):
         return redirect('posts:index')
     if form.is_valid():
         form.save()
-        return redirect('posts:post_detail', post.id)  # type: ignore
+        return redirect('posts:post_detail', post.pk)  
     return render(request, template, {'form': form, 'is_edit': True})
