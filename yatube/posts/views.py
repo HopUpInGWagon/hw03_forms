@@ -83,5 +83,5 @@ def post_edit(request, post_id):
         return redirect('posts:index')
     if form.is_valid():
         form.save()
-        return redirect('posts:post_detail', post.pk)  
+        return redirect('posts:post_detail', post.pk)
     return render(request, template, {'form': form, 'is_edit': True})
