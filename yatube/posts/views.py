@@ -4,12 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .forms import PostForm
 
+post_amount = 10
+
 
 def index(request):
     template = 'posts/index.html'
     title = 'Последние обновления на сайте'
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, post_amount)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -23,7 +25,7 @@ def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
     post_list = group.posts.all()  # type: ignore
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, post_amount)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -38,7 +40,7 @@ def profile(request, username):
     template = 'posts/profile.html'
     author = get_object_or_404(User, username=username)
     post_list = author.posts.all()  # type: ignore
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, post_amount)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
